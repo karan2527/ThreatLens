@@ -10,7 +10,7 @@
 | 3 | Database models and Alembic migrations | DONE (SQLite-compatible) |
 | 4 | Indicator validation and normalization | DONE |
 | 5 | Core security layer | DONE (local fallback) |
-| 6 | Provider framework and VirusTotal adapter | NOT STARTED |
+| 6 | Provider framework and VirusTotal adapter | DONE |
 | 7 | Additional provider adapters | NOT STARTED |
 | 8 | Caching and provider quota management | NOT STARTED |
 | 9 | Correlation and risk scoring | NOT STARTED |
@@ -60,3 +60,4 @@ No environment variables have been set. Secrets must be supplied locally through
 - Redis policy: fail closed for scan creation, fail open for read-only endpoints.
 - Local rate limits: 20 scans/hour/session, 60 requests/minute/IP, 2 concurrent scans/session.
 - Security documentation is in `docs/security.md`.
+- VirusTotal adapter uses backend-only `VIRUSTOTAL_API_KEY`; tests use an in-memory HTTP transport.

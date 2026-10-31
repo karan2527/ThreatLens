@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 
-from pydantic import SecretStr, field_validator, model_validator
+from pydantic import SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     urlhaus_auth_key: SecretStr | None = None
     otx_api_key: SecretStr | None = None
     google_safe_browsing_api_key: SecretStr | None = None
-    cors_origins: list[str] = ["http://localhost:5173"]
+    cors_origins: str = "http://localhost:5173"
     max_scan_concurrency: int = 2
     max_file_size_mb: int = 10
     default_scan_cache_ttl: int = 3600
@@ -36,14 +36,6 @@ class Settings(BaseSettings):
     celery_result_backend: str | None = None
     mock_providers: bool = True
 
-    @field_validator("cors_origins", mode="before")
-    @classmethod
-    def parse_cors_origins(cls, value: str | list[str]) -> list[str]:
-        """Accept either a comma-separated environment value or a list."""
-        if isinstance(value, str):
-            return [origin.strip() for origin in value.split(",") if origin.strip()]
-        return value
-
     @model_validator(mode="after")
     def validate_production_security(self) -> "Settings":
         """Reject unsafe production settings."""
@@ -51,9 +43,16 @@ class Settings(BaseSettings):
             self.secret_key.get_secret_value() == "CHANGE_ME" or self.debug
         ):
             raise ValueError("production requires a strong SECRET_KEY and DEBUG=false")
-        if "*" in self.cors_origins and self.app_env == "production":
+        if "*" in self.cors_origins_list and self.app_env == "production":
             raise ValueError("wildcard CORS origins are not allowed in production")
         return self
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        """Return configured CORS origins as a parsed list."""
+        return [
+            origin.strip() for origin in self.cors_origins.split(",") if origin.strip()
+        ]
 
     def enabled_providers(self) -> list[str]:
         """Return configured providers and development-only mock providers."""

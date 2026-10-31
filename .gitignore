@@ -15,6 +15,7 @@ build/
 coverage/
 *.log
 *.db
+*.swp
 reports_output/
 .DS_Store
 .idea/
