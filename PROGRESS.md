@@ -7,7 +7,7 @@
 | 0 | Pre-flight questions and decisions | DONE |
 | 1 | Repository, tooling and project skeleton | DONE |
 | 2 | Docker Compose, configuration and health endpoint | DONE (local simplified mode) |
-| 3 | Database models and Alembic migrations | NOT STARTED |
+| 3 | Database models and Alembic migrations | DONE (SQLite-compatible) |
 | 4 | Indicator validation and normalization | NOT STARTED |
 | 5 | Core security layer | NOT STARTED |
 | 6 | Provider framework and VirusTotal adapter | NOT STARTED |
@@ -55,3 +55,4 @@ No environment variables have been set. Secrets must be supplied locally through
 - Pre-commit could not fetch remote hook repositories because Git could not obtain credentials in this environment.
 - Confirm the license before production release.
 - Provider licensing and API keys must be reviewed before public deployment.
+- The initial SQLite-compatible schema migration is `0001_initial`.
