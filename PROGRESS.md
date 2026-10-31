@@ -16,7 +16,7 @@
 | 9 | Correlation and risk scoring | DONE |
 | 10 | Scan orchestration and scan API | DONE (in-process local mode) |
 | 11 | History and dashboard API | DONE (anonymous-session scoped) |
-| 12 | PDF and JSON reports | NOT STARTED |
+| 12 | PDF and JSON reports | DONE (local file storage) |
 | 13 | Frontend foundation and design system | NOT STARTED |
 | 14 | Landing, scanner, and results pages | NOT STARTED |
 | 15 | Dashboard, history, and about pages | NOT STARTED |

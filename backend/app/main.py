@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 
 from app.api.dashboard import router as dashboard_router
+from app.api.reports import router as reports_router
 from app.api.scans import router as scans_router
 from app.config import get_settings
 from app.core.exceptions import AppError, app_error_handler
@@ -45,6 +46,7 @@ async def health() -> JSONResponse:
 app.include_router(api_router)
 app.include_router(scans_router, prefix="/api/v1")
 app.include_router(dashboard_router, prefix="/api/v1")
+app.include_router(reports_router, prefix="/api/v1")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
