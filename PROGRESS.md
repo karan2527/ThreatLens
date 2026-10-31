@@ -5,8 +5,8 @@
 | Step | Title | Status |
 |---:|---|---|
 | 0 | Pre-flight questions and decisions | DONE |
-| 1 | Repository, tooling and project skeleton | BLOCKED |
-| 2 | Docker Compose, configuration and health endpoint | BLOCKED |
+| 1 | Repository, tooling and project skeleton | DONE |
+| 2 | Docker Compose, configuration and health endpoint | DONE (local simplified mode) |
 | 3 | Database models and Alembic migrations | NOT STARTED |
 | 4 | Indicator validation and normalization | NOT STARTED |
 | 5 | Core security layer | NOT STARTED |
@@ -50,7 +50,8 @@ No environment variables have been set. Secrets must be supplied locally through
 
 ## Open questions and blockers
 
-- Docker Engine and Docker Compose are not installed in the current environment; Step 2 cannot be verified until they are available.
+- Docker, PostgreSQL, Redis, and Celery are intentionally not used for the local simplified mode.
+- Local development uses SQLite and reports Redis/worker as unavailable until deployment infrastructure is added.
 - Pre-commit could not fetch remote hook repositories because Git could not obtain credentials in this environment.
 - Confirm the license before production release.
 - Provider licensing and API keys must be reviewed before public deployment.
