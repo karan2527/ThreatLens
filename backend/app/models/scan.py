@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy import JSON, CheckConstraint, DateTime, Enum, ForeignKey, Index, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.models.base import Base, UUIDMixin
+from app.models.base import Base, UUIDMixin, utc_now
 from app.models.enums import ScanStatus, Severity, Verdict
 
 
@@ -52,5 +52,5 @@ class Scan(UUIDMixin, Base):
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False
+        DateTime(timezone=True), default=utc_now, nullable=False
     )

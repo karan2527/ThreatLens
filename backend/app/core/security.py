@@ -38,7 +38,7 @@ async def get_current_session(
             )
         )
         session = result.scalar_one_or_none()
-        if session and session.expires_at <= now:
+        if session and session.expires_at.replace(tzinfo=UTC) <= now:
             session = None
     if session is None:
         token = secrets.token_urlsafe(32)
@@ -49,7 +49,7 @@ async def get_current_session(
             last_seen_at=now,
         )
         db.add(session)
-        await db.flush()
+        await db.commit()
         response.set_cookie(
             SESSION_COOKIE,
             token,

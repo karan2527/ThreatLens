@@ -17,7 +17,7 @@ from app.models.provider_result import ProviderResult
 from app.models.scan import Scan
 from app.schemas.provider import NormalizedProviderResult, ProviderCheckRequest
 from app.services.cache_service import cache
-from app.services.correlation import correlate
+from app.services.correlation import CorrelationReport, correlate
 from app.services.risk_engine import score_indicator
 
 
@@ -128,7 +128,11 @@ async def execute_scan(scan_id: str) -> None:
             scan.severity = cast("Severity", scored["severity"])
             scan.risk_score = cast("int", scored["risk_score"])
             scan.coverage = cast("dict[str, object]", scored["coverage"])
-            scan.explanation = scored
+            explanation = dict(scored)
+            correlation_details = explanation.get("correlation")
+            if isinstance(correlation_details, CorrelationReport):
+                explanation["correlation"] = correlation_details.model_dump()
+            scan.explanation = explanation
             scan.completed_at = datetime.now(UTC)
             await db.commit()
         except Exception:

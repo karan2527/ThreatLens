@@ -12,6 +12,10 @@ def normalize(
 ) -> dict[str, object]:
     """Return the API-ready normalized indicator representation."""
     result: ValidatedIndicator = validate_indicator(value, expected_type)
-    normalized = asdict(result)
+    normalized = {
+        key: value
+        for key, value in asdict(result).items()
+        if key in {"type", "value", "normalized_value", "hash_algorithm"}
+    }
     normalized["canonical_hash"] = canonical_hash(result.type, result.normalized_value)
     return normalized
