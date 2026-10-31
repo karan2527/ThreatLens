@@ -20,3 +20,9 @@ development is intentionally single-process, so its limiter is not suitable
 for multiple workers.
 
 Logs redact API keys, cookies, authorization values, and session tokens.
+
+Production configuration requires `DEBUG=false`, a `SECRET_KEY` with at least
+32 characters, explicit non-wildcard CORS origins, and
+`MOCK_PROVIDERS=false`. Generated reports are stored below the ignored
+`backend/reports_output/` directory; download responses reject paths outside
+that directory.

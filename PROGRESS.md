@@ -21,7 +21,7 @@
 | 14 | Landing, scanner, and results pages | DONE (scanner API connected) |
 | 15 | Dashboard, history, and about pages | DONE (session-scoped views) |
 | 16 | Frontend test suite and quality gate | DONE (Vitest + jsdom) |
-| 17 | Security hardening and security tests | NOT STARTED |
+| 17 | Security hardening and security tests | DONE (configuration and ownership coverage) |
 | 18 | Backend integration and end-to-end tests | NOT STARTED |
 | 19 | Production deployment | NOT STARTED |
 | 20 | Final acceptance audit and handover | NOT STARTED |
@@ -70,3 +70,5 @@ No environment variables have been set. Secrets must be supplied locally through
   `http://localhost:8000/api/v1`) and polls owned scans until results are ready.
 - Dashboard and history views consume the session-scoped `/dashboard` and
   `/history` endpoints; the About view documents the product model.
+- Security tests cover CSRF, session ownership, redaction, production
+  configuration, and report path containment.

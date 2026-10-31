@@ -40,9 +40,15 @@ class Settings(BaseSettings):
     def validate_production_security(self) -> "Settings":
         """Reject unsafe production settings."""
         if self.app_env == "production" and (
-            self.secret_key.get_secret_value() == "CHANGE_ME" or self.debug
+            len(self.secret_key.get_secret_value()) < 32
+            or self.secret_key.get_secret_value() == "CHANGE_ME"
+            or self.debug
         ):
-            raise ValueError("production requires a strong SECRET_KEY and DEBUG=false")
+            raise ValueError(
+                "production requires a 32-character SECRET_KEY and DEBUG=false"
+            )
+        if self.app_env == "production" and self.mock_providers:
+            raise ValueError("mock providers must be disabled in production")
         if "*" in self.cors_origins_list and self.app_env == "production":
             raise ValueError("wildcard CORS origins are not allowed in production")
         return self

@@ -4,7 +4,8 @@ import logging
 import re
 
 _SECRET_PATTERN = re.compile(
-    r"(?i)(authorization|cookie|secret_key|api[_-]?key|token)([=:]\s*)([^,\s;]+)"
+    r"(?i)(authorization|cookie|secret_key|api[_-]?key|token)"
+    r"([=:]\s*)(bearer\s+[^,\s;]+|[^,\s;]+)"
 )
 
 

@@ -14,7 +14,7 @@ from app.core.security import require_csrf
 from app.database import get_db
 from app.models.report import Report
 from app.schemas.report import ReportCreateResponse
-from app.services.report_service import generate_report
+from app.services.report_service import REPORT_DIR, generate_report
 
 router = APIRouter(prefix="/scans", tags=["reports"])
 
@@ -62,6 +62,12 @@ async def download_report(
     if report is None:
         raise NotFoundError()
     path = Path(report.storage_path)
+    try:
+        path.relative_to(REPORT_DIR.resolve())
+    except ValueError:
+        raise AppError(
+            "REPORT_UNAVAILABLE", "report file is unavailable", 410
+        ) from None
     if not path.is_file():
         raise AppError("REPORT_UNAVAILABLE", "report file is unavailable", 410)
     return FileResponse(
