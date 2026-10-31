@@ -9,7 +9,7 @@
 | 2 | Docker Compose, configuration and health endpoint | DONE (local simplified mode) |
 | 3 | Database models and Alembic migrations | DONE (SQLite-compatible) |
 | 4 | Indicator validation and normalization | DONE |
-| 5 | Core security layer | NOT STARTED |
+| 5 | Core security layer | DONE (local fallback) |
 | 6 | Provider framework and VirusTotal adapter | NOT STARTED |
 | 7 | Additional provider adapters | NOT STARTED |
 | 8 | Caching and provider quota management | NOT STARTED |
@@ -57,3 +57,6 @@ No environment variables have been set. Secrets must be supplied locally through
 - Provider licensing and API keys must be reviewed before public deployment.
 - The initial SQLite-compatible schema migration is `0001_initial`.
 - Indicator validation is enforced by the backend; frontend Zod validation is UX-only.
+- Redis policy: fail closed for scan creation, fail open for read-only endpoints.
+- Local rate limits: 20 scans/hour/session, 60 requests/minute/IP, 2 concurrent scans/session.
+- Security documentation is in `docs/security.md`.

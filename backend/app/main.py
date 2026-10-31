@@ -9,11 +9,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 
 from app.config import get_settings
+from app.core.exceptions import AppError, app_error_handler
+from app.core.logging import configure_logging
 from app.database import check_database, close_database
 
 settings = get_settings()
+configure_logging(settings.log_level)
 app = FastAPI(title=settings.app_name, version="0.1.0", debug=settings.debug)
 api_router = APIRouter(prefix="/api/v1")
+app.add_exception_handler(AppError, app_error_handler)
 
 
 @api_router.get("/health")
@@ -52,6 +56,7 @@ async def request_context(
 ) -> Response:
     """Attach a request ID and baseline security headers to every response."""
     request_id = request.headers.get("X-Request-ID", str(uuid4()))
+    request.state.request_id = request_id
     response = await call_next(request)
     response.headers["X-Request-ID"] = request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
