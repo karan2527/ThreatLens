@@ -12,7 +12,7 @@
 | 5 | Core security layer | DONE (local fallback) |
 | 6 | Provider framework and VirusTotal adapter | DONE |
 | 7 | Additional provider adapters | DONE |
-| 8 | Caching and provider quota management | NOT STARTED |
+| 8 | Caching and provider quota management | DONE (local fallback) |
 | 9 | Correlation and risk scoring | NOT STARTED |
 | 10 | Scan orchestration and scan API | NOT STARTED |
 | 11 | History and dashboard API | NOT STARTED |
@@ -62,3 +62,4 @@ No environment variables have been set. Secrets must be supplied locally through
 - Security documentation is in `docs/security.md`.
 - VirusTotal adapter uses backend-only `VIRUSTOTAL_API_KEY`; tests use an in-memory HTTP transport.
 - Additional provider configuration and result semantics are documented in `docs/providers.md`.
+- Local cache and quota behavior is documented in `docs/operations.md`.
