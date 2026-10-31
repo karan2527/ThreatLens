@@ -4,7 +4,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Request, Response
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.exceptions import NotFoundError
+from app.core.exceptions import AppError, NotFoundError
 from app.core.rate_limiter import limiter
 from app.core.security import get_current_session, require_csrf, require_scan_owner
 from app.database import get_db
@@ -20,6 +20,7 @@ from app.schemas.scan import (
 )
 from app.services.normalizer import normalize
 from app.services.orchestrator import execute_scan
+from app.utils.validators import IndicatorValidationError
 
 router = APIRouter(prefix="/scans", tags=["scans"])
 
@@ -37,7 +38,10 @@ async def create_scan(
     session = await get_current_session(request, response, db)
     limiter.check_request(request.client.host if request.client else "unknown")
     limiter.check_scan(session.id)
-    normalized = normalize(payload.value, payload.type)
+    try:
+        normalized = normalize(payload.value, payload.type)
+    except IndicatorValidationError as error:
+        raise AppError(error.code, error.message, 422) from error
     existing = await db.execute(
         select(Indicator).where(
             Indicator.type == normalized["type"],
