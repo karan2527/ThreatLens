@@ -55,12 +55,12 @@ class OTXProvider(ThreatProvider):
             pulse_info = payload.get("pulse_info", {})
             pulses = pulse_info.get("pulses", [])
             count = int(pulse_info.get("count", len(pulses)))
-            verdict = Verdict.SUSPICIOUS if count else Verdict.CLEAN
+            verdict = Verdict.UNKNOWN if count else Verdict.CLEAN
             return result(
                 self.name,
                 ProviderStatus.SUCCESS,
                 verdict=verdict,
-                confidence="MEDIUM" if count else "LOW",
+                confidence="LOW" if count else "MEDIUM",
                 pulse_count=count,
                 pulses=[
                     {

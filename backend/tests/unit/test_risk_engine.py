@@ -60,6 +60,19 @@ def test_all_clean_requires_coverage_and_uses_clean_wording() -> None:
     assert "No malicious findings" in scored["explanation"]["verdict_rationale"]
 
 
+def test_otx_context_pulses_do_not_raise_risk() -> None:
+    """Informational OTX pulses do not turn a clean domain suspicious."""
+    scored = score_indicator(
+        IndicatorType.DOMAIN,
+        [
+            vt(Verdict.CLEAN),
+            result("otx", Verdict.UNKNOWN, pulses=[{"id": "context-only"}]),
+        ],
+    )
+    assert scored["risk_score"] == 0
+    assert scored["verdict"] == Verdict.CLEAN
+
+
 def test_urlhaus_online_is_authoritative_override() -> None:
     """An active URLhaus listing enforces the malicious minimum."""
     scored = score_indicator(

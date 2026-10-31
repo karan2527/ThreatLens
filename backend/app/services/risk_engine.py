@@ -52,16 +52,8 @@ def _provider_score(item: NormalizedProviderResult) -> float | None:
     if item.provider_name == "google_safe_browsing":
         return 100.0 if data.get("matched") else None
     if item.provider_name == "otx":
-        pulses = data.get("pulses", [])
-        if not isinstance(pulses, list) or not pulses:
-            return None
-        quality = sum(
-            1
-            for pulse in pulses
-            if isinstance(pulse, dict)
-            and (pulse.get("references") or pulse.get("author"))
-        )
-        return min(60.0, 20.0 + quality * 20.0)
+        # OTX pulses are contextual metadata, not an independent verdict.
+        return None
     return None
 
 
