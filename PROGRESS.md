@@ -13,7 +13,7 @@
 | 6 | Provider framework and VirusTotal adapter | DONE |
 | 7 | Additional provider adapters | DONE |
 | 8 | Caching and provider quota management | DONE (local fallback) |
-| 9 | Correlation and risk scoring | NOT STARTED |
+| 9 | Correlation and risk scoring | DONE |
 | 10 | Scan orchestration and scan API | NOT STARTED |
 | 11 | History and dashboard API | NOT STARTED |
 | 12 | PDF and JSON reports | NOT STARTED |
@@ -63,3 +63,4 @@ No environment variables have been set. Secrets must be supplied locally through
 - VirusTotal adapter uses backend-only `VIRUSTOTAL_API_KEY`; tests use an in-memory HTTP transport.
 - Additional provider configuration and result semantics are documented in `docs/providers.md`.
 - Local cache and quota behavior is documented in `docs/operations.md`.
+- Scoring policy is documented in `docs/scoring.md` and uses version `scoring_v1`.
