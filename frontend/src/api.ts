@@ -49,6 +49,38 @@ export interface ScanResults extends ScanStatusResponse {
   explanation: Record<string, unknown>;
 }
 
+export interface HistoryItem {
+  scan_id: string;
+  indicator_type: IndicatorType;
+  normalized_value: string;
+  status: ScanStatus;
+  verdict: Verdict | null;
+  severity: Severity | null;
+  risk_score: number | null;
+  progress: number;
+  created_at: string;
+  completed_at: string | null;
+}
+
+export interface HistoryResponse {
+  items: HistoryItem[];
+  page: number;
+  page_size: number;
+  total: number;
+  has_next: boolean;
+}
+
+export interface DashboardSummary {
+  total_scans: number;
+  completed_scans: number;
+  running_scans: number;
+  failed_scans: number;
+  average_risk_score: number | null;
+  verdict_counts: Record<string, number>;
+  severity_counts: Record<string, number>;
+  recent_scans: HistoryItem[];
+}
+
 export async function createScan(value: string, type?: IndicatorType) {
   const response = await api.post<{ scan_id: string; status: ScanStatus; progress: number }>(
     "/scans",
@@ -64,6 +96,18 @@ export async function getScanStatus(scanId: string) {
 
 export async function getScanResults(scanId: string) {
   const response = await api.get<ScanResults>(`/scans/${scanId}/results`);
+  return response.data;
+}
+
+export async function getDashboard() {
+  const response = await api.get<DashboardSummary>("/dashboard");
+  return response.data;
+}
+
+export async function getHistory(page = 1, pageSize = 20) {
+  const response = await api.get<HistoryResponse>("/history", {
+    params: { page, page_size: pageSize },
+  });
   return response.data;
 }
 

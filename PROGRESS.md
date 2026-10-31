@@ -19,7 +19,7 @@
 | 12 | PDF and JSON reports | DONE (local file storage) |
 | 13 | Frontend foundation and design system | DONE (responsive shell) |
 | 14 | Landing, scanner, and results pages | DONE (scanner API connected) |
-| 15 | Dashboard, history, and about pages | NOT STARTED |
+| 15 | Dashboard, history, and about pages | DONE (session-scoped views) |
 | 16 | Frontend test suite and quality gate | NOT STARTED |
 | 17 | Security hardening and security tests | NOT STARTED |
 | 18 | Backend integration and end-to-end tests | NOT STARTED |
@@ -68,3 +68,5 @@ No environment variables have been set. Secrets must be supplied locally through
   frontend Vitest has no test files yet and currently reports "No test files found".
 - Scanner UI connects to the local API through `VITE_API_BASE_URL` (default
   `http://localhost:8000/api/v1`) and polls owned scans until results are ready.
+- Dashboard and history views consume the session-scoped `/dashboard` and
+  `/history` endpoints; the About view documents the product model.

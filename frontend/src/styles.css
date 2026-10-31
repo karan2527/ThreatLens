@@ -474,11 +474,227 @@ h3 {
   padding-top: 30px;
 }
 
+.page-section {
+  padding: 92px 5.5vw 110px;
+}
+
+.page-intro {
+  max-width: 700px;
+}
+
+.page-intro h1 {
+  font-size: clamp(45px, 6vw, 78px);
+  margin-bottom: 22px;
+}
+
+.metric-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 52px;
+}
+
+.metric-card,
+.data-card,
+.about-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 22px;
+}
+
+.metric-card {
+  border-top: 2px solid var(--green);
+}
+
+.metric-card span {
+  color: var(--muted);
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 38px;
+  letter-spacing: -0.08em;
+  margin-top: 28px;
+}
+
+.dashboard-columns {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 0.8fr 1.2fr;
+  margin-top: 18px;
+}
+
+.data-card-heading {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  font-size: 11px;
+  font-weight: 800;
+  justify-content: space-between;
+  letter-spacing: 0.1em;
+  padding-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.data-card-heading .text-link {
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.distribution-row {
+  border-bottom: 1px solid var(--line);
+  padding: 17px 0 14px;
+}
+
+.distribution-row > div:first-child {
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+}
+
+.distribution-row strong {
+  color: var(--green);
+}
+
+.distribution-track {
+  background: var(--mint);
+  height: 5px;
+  margin-top: 10px;
+}
+
+.distribution-track span {
+  background: var(--green);
+  display: block;
+  height: 100%;
+}
+
+.empty-state {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 30px 0 10px;
+}
+
+.history-row {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  padding: 14px 0;
+}
+
+.history-row-table {
+  grid-template-columns: minmax(0, 1.5fr) 80px 120px 55px 85px;
+}
+
+.history-indicator {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-type,
+.history-count {
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.history-row strong {
+  font-size: 14px;
+}
+
+.history-table {
+  background: var(--white);
+  border: 1px solid var(--line);
+  margin-top: 52px;
+  padding: 0 22px;
+}
+
+.history-table-head {
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  display: grid;
+  font-size: 9px;
+  font-weight: 800;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.5fr) 80px 120px 55px 85px;
+  letter-spacing: 0.1em;
+  padding: 16px 0;
+  text-transform: uppercase;
+}
+
+.history-count {
+  margin-top: 15px;
+}
+
+.about-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 58px;
+}
+
+.about-card {
+  border-top: 2px solid var(--green);
+  min-height: 220px;
+}
+
+.about-card .feature-index {
+  margin-bottom: 54px;
+}
+
+.about-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
 .results-header {
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
   gap: 20px;
+}
+
+.page-section {
+  padding: 70px 12px 80px;
+}
+
+.page-intro h1 {
+  font-size: clamp(45px, 13vw, 68px);
+}
+
+.metric-grid,
+.dashboard-columns,
+.about-grid {
+  display: block;
+}
+
+.metric-card,
+.data-card,
+.about-card {
+  margin-top: 12px;
+}
+
+.metric-card strong {
+  margin-top: 20px;
+}
+
+.history-table {
+  overflow-x: auto;
+  padding: 0 16px;
+}
+
+.history-table-head,
+.history-row-table {
+  min-width: 560px;
 }
 
 .results-header .eyebrow {
