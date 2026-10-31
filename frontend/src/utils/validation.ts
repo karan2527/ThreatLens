@@ -17,6 +17,10 @@ export const indicatorSchema = z
   )
   .superRefine((value, context) => {
     if (hashPattern.test(value) && [32, 40, 64].includes(value.length)) return;
+    if (value.includes(":") && !value.includes("://")) {
+      context.addIssue({ code: "custom", message: "Only HTTP and HTTPS URLs are supported" });
+      return;
+    }
     if (value.includes("://")) {
       try {
         const url = new URL(value);

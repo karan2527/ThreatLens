@@ -20,7 +20,7 @@
 | 13 | Frontend foundation and design system | DONE (responsive shell) |
 | 14 | Landing, scanner, and results pages | DONE (scanner API connected) |
 | 15 | Dashboard, history, and about pages | DONE (session-scoped views) |
-| 16 | Frontend test suite and quality gate | NOT STARTED |
+| 16 | Frontend test suite and quality gate | DONE (Vitest + jsdom) |
 | 17 | Security hardening and security tests | NOT STARTED |
 | 18 | Backend integration and end-to-end tests | NOT STARTED |
 | 19 | Production deployment | NOT STARTED |
@@ -64,8 +64,8 @@ No environment variables have been set. Secrets must be supplied locally through
 - Additional provider configuration and result semantics are documented in `docs/providers.md`.
 - Local cache and quota behavior is documented in `docs/operations.md`.
 - Scoring policy is documented in `docs/scoring.md` and uses version `scoring_v1`.
-- Frontend foundation uses a responsive React shell with a reusable visual language;
-  frontend Vitest has no test files yet and currently reports "No test files found".
+- Frontend foundation uses a responsive React shell with a reusable visual language.
+- Frontend Vitest uses jsdom and covers the scanner shell and indicator validation.
 - Scanner UI connects to the local API through `VITE_API_BASE_URL` (default
   `http://localhost:8000/api/v1`) and polls owned scans until results are ready.
 - Dashboard and history views consume the session-scoped `/dashboard` and
