@@ -66,8 +66,10 @@ No environment variables have been set. Secrets must be supplied locally through
 - Scoring policy is documented in `docs/scoring.md` and uses version `scoring_v1`.
 - Frontend foundation uses a responsive React shell with a reusable visual language.
 - Frontend Vitest uses jsdom and covers the scanner shell and indicator validation.
-- Scanner UI connects to the local API through `VITE_API_BASE_URL` (default
-  `http://localhost:8000/api/v1`) and polls owned scans until results are ready.
+- Scanner UI connects to the local API through `VITE_API_BASE_URL` and polls
+  owned scans until results are ready. Without an override, it uses the page's
+  hostname on port 8000 so anonymous session cookies work consistently when
+  the frontend is opened on either `localhost` or `127.0.0.1`.
 - Dashboard and history views consume the session-scoped `/dashboard` and
   `/history` endpoints; the About view documents the product model.
 - Security tests cover CSRF, session ownership, redaction, production

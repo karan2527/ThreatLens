@@ -2,8 +2,10 @@ import axios from "axios";
 
 import type { IndicatorType } from "./utils/validation";
 
+const localApiBaseUrl = `http://${window.location.hostname}:8000/api/v1`;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000/api/v1",
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? localApiBaseUrl,
   withCredentials: true,
   headers: { "X-Requested-With": "ThreatLens" },
 });
