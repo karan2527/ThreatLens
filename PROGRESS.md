@@ -17,7 +17,7 @@
 | 10 | Scan orchestration and scan API | DONE (in-process local mode) |
 | 11 | History and dashboard API | DONE (anonymous-session scoped) |
 | 12 | PDF and JSON reports | DONE (local file storage) |
-| 13 | Frontend foundation and design system | NOT STARTED |
+| 13 | Frontend foundation and design system | DONE (responsive shell) |
 | 14 | Landing, scanner, and results pages | NOT STARTED |
 | 15 | Dashboard, history, and about pages | NOT STARTED |
 | 16 | Frontend test suite and quality gate | NOT STARTED |
@@ -64,3 +64,5 @@ No environment variables have been set. Secrets must be supplied locally through
 - Additional provider configuration and result semantics are documented in `docs/providers.md`.
 - Local cache and quota behavior is documented in `docs/operations.md`.
 - Scoring policy is documented in `docs/scoring.md` and uses version `scoring_v1`.
+- Frontend foundation uses a responsive React shell with a reusable visual language;
+  frontend Vitest has no test files yet and currently reports "No test files found".
