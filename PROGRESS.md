@@ -5,7 +5,7 @@
 | Step | Title | Status |
 |---:|---|---|
 | 0 | Pre-flight questions and decisions | DONE |
-| 1 | Repository, tooling and project skeleton | IN PROGRESS |
+| 1 | Repository, tooling and project skeleton | DONE |
 | 2 | Docker Compose, configuration and health endpoint | BLOCKED |
 | 3 | Database models and Alembic migrations | NOT STARTED |
 | 4 | Indicator validation and normalization | NOT STARTED |
@@ -50,7 +50,6 @@ No environment variables have been set. Secrets must be supplied locally through
 
 ## Open questions and blockers
 
-- Docker Engine and Docker Compose are not installed in the current environment.
+- Docker Engine and Docker Compose are not installed in the current environment; Step 2 cannot be verified until they are available.
 - Confirm the license before production release.
 - Provider licensing and API keys must be reviewed before public deployment.
-

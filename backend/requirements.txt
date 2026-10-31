@@ -1,5 +1,5 @@
-fastapi==0.115.6
-pydantic==2.10.5
+fastapi==0.115.12
+pydantic==2.12.4
 pydantic-settings==2.7.1
 sqlalchemy==2.0.36
 asyncpg==0.30.0
@@ -9,4 +9,3 @@ celery[redis]==5.4.0
 redis==5.2.1
 reportlab==4.2.5
 slowapi==0.1.9
-
