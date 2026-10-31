@@ -11,7 +11,7 @@
 | 4 | Indicator validation and normalization | DONE |
 | 5 | Core security layer | DONE (local fallback) |
 | 6 | Provider framework and VirusTotal adapter | DONE |
-| 7 | Additional provider adapters | NOT STARTED |
+| 7 | Additional provider adapters | DONE |
 | 8 | Caching and provider quota management | NOT STARTED |
 | 9 | Correlation and risk scoring | NOT STARTED |
 | 10 | Scan orchestration and scan API | NOT STARTED |
@@ -61,3 +61,4 @@ No environment variables have been set. Secrets must be supplied locally through
 - Local rate limits: 20 scans/hour/session, 60 requests/minute/IP, 2 concurrent scans/session.
 - Security documentation is in `docs/security.md`.
 - VirusTotal adapter uses backend-only `VIRUSTOTAL_API_KEY`; tests use an in-memory HTTP transport.
+- Additional provider configuration and result semantics are documented in `docs/providers.md`.
