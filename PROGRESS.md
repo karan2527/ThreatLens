@@ -14,7 +14,7 @@
 | 7 | Additional provider adapters | DONE |
 | 8 | Caching and provider quota management | DONE (local fallback) |
 | 9 | Correlation and risk scoring | DONE |
-| 10 | Scan orchestration and scan API | NOT STARTED |
+| 10 | Scan orchestration and scan API | DONE (in-process local mode) |
 | 11 | History and dashboard API | NOT STARTED |
 | 12 | PDF and JSON reports | NOT STARTED |
 | 13 | Frontend foundation and design system | NOT STARTED |
