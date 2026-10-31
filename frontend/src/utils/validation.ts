@@ -5,6 +5,7 @@ const hashPattern = /^[0-9a-f]+$/i;
 const domainLabel = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i;
 
 export const indicatorTypeSchema = z.enum(["url", "ip", "domain", "hash"]);
+export type IndicatorType = z.infer<typeof indicatorTypeSchema>;
 
 export const indicatorSchema = z
   .string()
