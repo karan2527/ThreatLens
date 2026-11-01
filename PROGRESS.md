@@ -6,7 +6,7 @@
 |---:|---|---|
 | 0 | Pre-flight questions and decisions | DONE |
 | 1 | Repository, tooling and project skeleton | DONE |
-| 2 | Docker Compose, configuration and health endpoint | DONE (local simplified mode) |
+| 2 | Configuration and health endpoint | DONE (local simplified mode) |
 | 3 | Database models and Alembic migrations | DONE (SQLite-compatible) |
 | 4 | Indicator validation and normalization | DONE |
 | 5 | Core security layer | DONE (local fallback) |
