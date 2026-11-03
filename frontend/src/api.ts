@@ -117,7 +117,9 @@ export function apiErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     const message = error.response?.data?.error?.message;
     if (typeof message === "string") return message;
-    if (error.response?.status === 0) return "The ThreatLens API is not reachable.";
+    if (!error.response) {
+      return "The ThreatLens API is not reachable. Start the backend on port 8000 and try again.";
+    }
   }
   return "The scan could not be completed. Please try again.";
 }

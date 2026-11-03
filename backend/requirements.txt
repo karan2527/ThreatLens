@@ -11,3 +11,4 @@ celery[redis]==5.4.0
 redis==5.2.1
 reportlab==4.2.5
 slowapi==0.1.9
+dnspython==2.7.0

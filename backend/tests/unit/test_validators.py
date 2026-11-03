@@ -55,6 +55,12 @@ def test_domain_normalization(value: str) -> None:
     assert validate_indicator(value).type == IndicatorType.DOMAIN
 
 
+def test_www_domain_normalization_strips_prefix() -> None:
+    """Standalone www domains use the apex domain as their canonical value."""
+    result = validate_indicator("WWW.Google.COM.")
+    assert result.normalized_value == "google.com"
+
+
 def test_explicit_type_mismatch_is_rejected() -> None:
     """Client-supplied type must agree with detection."""
     with pytest.raises(IndicatorValidationError) as error:

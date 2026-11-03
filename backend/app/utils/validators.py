@@ -99,6 +99,8 @@ def _validate_domain_host(host: str) -> str:
     if host.endswith("."):
         host = host[:-1]
     normalized = _idna_host(host)
+    if normalized.startswith("www."):
+        normalized = normalized.removeprefix("www.")
     labels = normalized.split(".")
     if len(labels) < 2 or any(not _LABEL_RE.fullmatch(label) for label in labels):
         raise IndicatorValidationError("INVALID_DOMAIN", "domain labels are invalid")
@@ -152,7 +154,7 @@ def validate_url(value: str) -> ValidatedIndicator:
 
 
 def validate_domain(value: str) -> ValidatedIndicator:
-    """Validate a public domain and normalize it to IDNA lowercase."""
+    """Validate a public domain and canonicalize optional www prefixes."""
     if not value or _CONTROL_RE.search(value) or "://" in value or "/" in value:
         raise IndicatorValidationError("INVALID_DOMAIN", "domain is invalid")
     try:

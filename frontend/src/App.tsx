@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   AlertCircle,
   ArrowUpRight,
@@ -7,6 +7,7 @@ import {
   ChevronDown,
   CircleHelp,
   Fingerprint,
+  Github,
   LayoutDashboard,
   LoaderCircle,
   Menu,
@@ -78,8 +79,16 @@ function App() {
         const nextStatus = await getScanStatus(scanId);
         if (active) setStatus(nextStatus);
         if (active && terminalStatuses.has(nextStatus.status)) {
-          const nextResults = await getScanResults(scanId);
-          setResults(nextResults);
+          if (nextStatus.status === "FAILED" || nextStatus.status === "CANCELLED") {
+            setError(
+              nextStatus.status === "FAILED"
+                ? "The scan failed while the backend was processing it. Check the backend terminal for details and try again."
+                : "The scan was cancelled before it completed.",
+            );
+          } else {
+            const nextResults = await getScanResults(scanId);
+            setResults(nextResults);
+          }
         }
       } catch (requestError) {
         if (active) setError(apiErrorMessage(requestError));
@@ -147,6 +156,16 @@ function App() {
             <a key={label} href={href} onClick={() => setMobileOpen(false)}><Icon size={16} aria-hidden="true" />{label}</a>
           ))}
           <a className="nav-help" href="#about" onClick={() => setMobileOpen(false)}><CircleHelp size={16} aria-hidden="true" />About</a>
+          <a
+            className="github-link"
+            href="https://github.com/karan2527/ThreadLens"
+            target="_blank"
+            rel="noreferrer"
+            title="Star this repo on GitHub"
+            aria-label="Star this repo on GitHub"
+          >
+            <Github size={16} aria-hidden="true" />GitHub
+          </a>
         </nav>
         <button className="session-button" type="button"><span className="status-dot" aria-hidden="true" />Local session<ChevronDown size={15} aria-hidden="true" /></button>
       </header>
@@ -160,9 +179,23 @@ function App() {
           <div className="hero-copy">
             <p className="eyebrow"><span className="eyebrow-line" aria-hidden="true" />Threat intelligence, made clear</p>
             <h1>See the signal<br /><em>behind the threat.</em></h1>
-            <p className="hero-description">Investigate URLs, domains, IPs, and file hashes with a focused intelligence report built from trusted security sources.</p>
+            <p className="hero-description">Investigate URLs, domains, IPs, and file hashes with a focused intelligence assessment built from trusted security sources.</p>
+            <div className="hero-capabilities" aria-label="ThreatLens capabilities">
+              <span>FOUR INDICATOR TYPES</span>
+              <span>DNS + RDAP</span>
+              <span>THREAT PROVIDERS</span>
+              <span>RISK SCORING</span>
+              <span>PROVIDER DETAIL</span>
+              <span>PRIVATE HISTORY</span>
+            </div>
             <div className="hero-actions">
-              <a className="button button-primary" href="#scanner-form">Start an investigation<ArrowUpRight size={17} aria-hidden="true" /></a>
+              <a
+                className="button button-primary"
+                href="#scanner"
+                onClick={() => window.setTimeout(() => document.getElementById("scanner-form")?.scrollIntoView({ behavior: "smooth", block: "start" }), 0)}
+              >
+                Try now<ArrowUpRight size={17} aria-hidden="true" />
+              </a>
               <a className="text-link" href="#about">How it works<ArrowUpRight size={15} aria-hidden="true" /></a>
             </div>
           </div>
@@ -195,10 +228,22 @@ function App() {
           {results && <ResultsPanel results={results} onStartOver={startOver} />}
         </section>
 
-        <section className="feature-grid" id="about">
-          <article><span className="feature-index">01</span><h3>One clear signal</h3><p>Turn scattered provider results into a measured risk score and useful next action.</p></article>
-          <article><span className="feature-index">02</span><h3>Context, not noise</h3><p>See why a result matters with transparent evidence, coverage, and provider detail.</p></article>
-          <article><span className="feature-index">03</span><h3>Built for careful work</h3><p>Investigate safely without opening suspicious URLs or exposing your indicator to the browser.</p></article>
+        <section className="how-it-works-section" id="about">
+          <div className="how-it-works-heading">
+            <div>
+              <p className="eyebrow"><span className="eyebrow-line" aria-hidden="true" />How ThreatLens works</p>
+              <h2>From indicator to informed action.</h2>
+            </div>
+            <p>Everything you need to investigate a suspicious signal, without the noise of disconnected tools.</p>
+          </div>
+          <div className="how-it-works-grid">
+            <article><span className="feature-index">01</span><h3>Choose an indicator</h3><p>Enter a URL, domain, public IP address, or file hash. ThreatLens validates the format before any lookup begins.</p></article>
+            <article><span className="feature-index">02</span><h3>Get domain context</h3><p>Domain scans add DNS records, RDAP registration, registrar age, nameserver analysis, SPF, DKIM, DMARC, and configuration anomalies.</p></article>
+            <article><span className="feature-index">03</span><h3>Compare evidence</h3><p>Relevant threat-intelligence providers are queried and their results are normalized into one consistent view.</p></article>
+            <article><span className="feature-index">04</span><h3>Understand the score</h3><p>Correlation turns provider evidence into a risk score, severity, verdict, coverage, and an explanation of what influenced it.</p></article>
+            <article><span className="feature-index">05</span><h3>Review the details</h3><p>Inspect each provider response, status, confidence, cached state, and the supporting intelligence behind the assessment.</p></article>
+            <article><span className="feature-index">06</span><h3>Revisit your work</h3><p>Use your private browser session to revisit completed investigations and review dashboard trends over time.</p></article>
+          </div>
         </section>
         </>}
       </main>
@@ -254,12 +299,16 @@ function HistoryView({ data, error }: { data: HistoryResponse | null; error: str
 function AboutView() {
   return (
     <section className="page-section about-page" id="about-page">
-      <PageIntro eyebrow="About ThreatLens" title="Clarity for careful investigation." description="ThreatLens brings multiple public threat intelligence sources into one measured, explainable workspace." />
+      <PageIntro eyebrow="How to use ThreatLens" title="Clarity for careful investigation." description="ThreatLens brings multiple public threat intelligence sources into one measured, explainable workspace. Follow the flow below to get the most from every investigation." />
       <div className="about-grid">
-        <article className="about-card"><span className="feature-index">01</span><h3>Normalize first</h3><p>Indicators are validated and normalized on the backend before any provider check is made.</p></article>
-        <article className="about-card"><span className="feature-index">02</span><h3>Correlate evidence</h3><p>Provider results are scored together, with conflicts and coverage shown instead of hidden.</p></article>
-        <article className="about-card"><span className="feature-index">03</span><h3>Keep ownership clear</h3><p>Anonymous sessions keep local investigations private without requiring an account to begin.</p></article>
+        <article className="about-card"><span className="feature-index">01 / INPUT</span><h3>Start with a signal</h3><p>Paste a URL, domain, public IP, or MD5, SHA-1, or SHA-256 hash into the scanner. You can press Enter or select Try now.</p></article>
+        <article className="about-card"><span className="feature-index">02 / ANALYZE</span><h3>Let the evidence load</h3><p>ThreatLens checks the relevant sources. Domain inputs receive additional DNS and RDAP intelligence, including mail-security and nameserver checks.</p></article>
+        <article className="about-card"><span className="feature-index">03 / INTERPRET</span><h3>Read the assessment</h3><p>Start with the verdict, severity, and score. Then read the rationale and inspect provider rows to understand agreement or conflict.</p></article>
+        <article className="about-card"><span className="feature-index">04 / REVISIT</span><h3>Use your workspace</h3><p>Dashboard shows totals and distributions. History keeps completed investigations attached to your private browser session.</p></article>
+        <article className="about-card"><span className="feature-index">05 / HISTORY</span><h3>Revisit your work</h3><p>Use the history view to return to completed investigations, compare findings, and keep your browser session organized.</p></article>
+        <article className="about-card"><span className="feature-index">06 / SAFE USE</span><h3>Keep context in mind</h3><p>A clean result means no malicious findings were returned by enough relevant checks; it is not a guarantee that an indicator is safe.</p></article>
       </div>
+      <div className="about-note"><span className="note-number">NOTE</span><p>ThreatLens never opens submitted URLs. Provider availability depends on configured credentials, network access, quotas, and each provider's terms.</p></div>
     </section>
   );
 }
@@ -282,6 +331,9 @@ function HistoryRow({ item, table = false }: { item: import("./api").HistoryItem
 
 function ResultsPanel({ results, onStartOver }: { results: ScanResults; onStartOver: () => void }) {
   const rationale = results.explanation.verdict_rationale;
+  const domainProvider = results.provider_results.find(
+    (provider) => provider.provider_name === "domain_intelligence",
+  );
   return (
     <div className="results-panel" aria-live="polite">
       <div className="results-header">
@@ -299,8 +351,93 @@ function ResultsPanel({ results, onStartOver }: { results: ScanResults; onStartO
           <div className="provider-row" key={provider.provider_name}><span>{provider.provider_name.replaceAll("_", " ")}</span><span className={`provider-status status-${provider.status.toLowerCase()}`}>{provider.verdict ?? provider.status}</span></div>
         ))}
       </div>
+      {domainProvider?.status === "SUCCESS" && (
+        <DomainIntelligencePanel data={domainProvider.normalized_data} />
+      )}
     </div>
   );
+}
+
+function DomainIntelligencePanel({ data }: { data: Record<string, unknown> }) {
+  const records = asRecord(data.dns_records);
+  const registration = asRecord(data.registration);
+  const nameservers = asRecord(data.nameservers);
+  const email = asRecord(data.email_authentication);
+  const spf = asRecord(email.spf);
+  const dkim = asRecord(email.dkim);
+  const dmarc = asRecord(email.dmarc);
+  const anomalies = Array.isArray(data.anomalies)
+    ? data.anomalies.filter((item): item is string => typeof item === "string")
+    : [];
+  return (
+    <section className="domain-intelligence" aria-label="Domain intelligence">
+      <div className="domain-intelligence-heading">
+        <div>
+          <p className="eyebrow">Domain intelligence</p>
+          <h3>DNS, registration &amp; mail security</h3>
+        </div>
+        <span className="domain-intelligence-badge">RDAP + DNS</span>
+      </div>
+      <div className="domain-intelligence-grid">
+        <DomainInsight title="Registration">
+          <span>{stringValue(registration.registrar, "Registrar unavailable")}</span>
+          <small>{formatAge(registration.age_days)}</small>
+          <small>Registered {stringValue(registration.registration_date, "date unavailable")}</small>
+        </DomainInsight>
+        <DomainInsight title="Nameservers">
+          <span>{stringValue(nameservers.count, "0")} authoritative records</span>
+          <small>{stringValue(nameservers.diversity, "unknown")} operator profile</small>
+          <small>{listValue(nameservers.nameservers)}</small>
+        </DomainInsight>
+        <DomainInsight title="Email authentication">
+          <span className="auth-row"><AuthStatus label="SPF" value={spf.valid === true} /></span>
+          <span className="auth-row"><AuthStatus label="DKIM" value={dkim.present === true} /></span>
+          <span className="auth-row"><AuthStatus label="DMARC" value={dmarc.valid === true} /></span>
+        </DomainInsight>
+      </div>
+      <div className="domain-records">
+        <div className="domain-subheading">DNS records</div>
+        {["A", "AAAA", "MX", "NS", "TXT", "CNAME"].map((type) => (
+          <div className="domain-record-row" key={type}>
+            <span>{type}</span>
+            <strong>{listValue(records[type])}</strong>
+          </div>
+        ))}
+      </div>
+      {anomalies.length > 0 && (
+        <div className="domain-anomalies">
+          <div className="domain-subheading">Configuration anomalies · {anomalies.length}</div>
+          {anomalies.map((anomaly) => <p key={anomaly}>{anomaly}</p>)}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function DomainInsight({ title, children }: { title: string; children: ReactNode }) {
+  return <div className="domain-insight"><span className="domain-subheading">{title}</span>{children}</div>;
+}
+
+function AuthStatus({ label, value }: { label: string; value: boolean }) {
+  return <><span>{label}</span><strong className={value ? "auth-good" : "auth-missing"}>{value ? "PASS" : "MISSING"}</strong></>;
+}
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : {};
+}
+
+function stringValue(value: unknown, fallback: string): string {
+  return typeof value === "string" || typeof value === "number" ? String(value) : fallback;
+}
+
+function listValue(value: unknown): string {
+  return Array.isArray(value) && value.length ? value.map(String).join(", ") : "None found";
+}
+
+function formatAge(value: unknown): string {
+  return typeof value === "number" ? `${value.toLocaleString()} days old` : "Age unavailable";
 }
 
 export default App;

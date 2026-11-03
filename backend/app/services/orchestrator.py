@@ -7,6 +7,7 @@ from app.core.quota import InProcessQuota
 from app.database import session_factory
 from app.integrations.abuseipdb import AbuseIPDBProvider
 from app.integrations.base import ThreatProvider
+from app.integrations.domain_intelligence import DomainIntelligenceProvider
 from app.integrations.google_safe_browsing import GoogleSafeBrowsingProvider
 from app.integrations.otx import OTXProvider
 from app.integrations.urlhaus import URLhausProvider
@@ -24,6 +25,7 @@ from app.services.risk_engine import score_indicator
 def provider_registry() -> list[ThreatProvider]:
     """Build the provider adapters in deterministic order."""
     return [
+        DomainIntelligenceProvider(),
         VirusTotalProvider(),
         AbuseIPDBProvider(),
         URLhausProvider(),
