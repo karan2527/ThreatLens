@@ -25,6 +25,7 @@ async def test_domain_intelligence_collects_dns_rdap_and_authentication(
         "TXT": ["v=spf1 include:_spf.example.net -all", "v=DMARC1; p=reject"],
         "CNAME": [],
     }
+
     async def resolve_records(domain: str) -> dict[str, list[str]]:
         return records
 

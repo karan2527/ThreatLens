@@ -216,9 +216,7 @@ class DomainIntelligenceProvider(ThreatProvider):
             record for record in txt_records if record.lower().startswith("v=spf1")
         ]
         dmarc_records = [
-            record
-            for record in txt_records
-            if record.lower().startswith("v=dmarc1")
+            record for record in txt_records if record.lower().startswith("v=dmarc1")
         ]
         return {
             "spf": {
@@ -255,9 +253,7 @@ class DomainIntelligenceProvider(ThreatProvider):
         if len(set(records.get("NS", []))) < 2:
             anomalies.append("Fewer than two unique authoritative nameservers found.")
         txt_records = records.get("TXT", [])
-        spf_count = sum(
-            record.lower().startswith("v=spf1") for record in txt_records
-        )
+        spf_count = sum(record.lower().startswith("v=spf1") for record in txt_records)
         dmarc_count = sum(
             record.lower().startswith("v=dmarc1") for record in txt_records
         )

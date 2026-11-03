@@ -1,0 +1,26 @@
+[33mcommit 74abebb3e6387704cd23ea674a0ff15cd4dd8c60[m[33m ([m[1;32mbackup-before-clean-history[m[33m)[m
+Author: Karan Jain <karanjain2527@gmail.com>
+Date:   Tue Nov 3 22:52:52 2026 +0530
+
+    added DNS analysis and updated UI/Doc
+
+ PROGRESS.md                                     |  78 [31m-----[m
+ README.md                                       | 428 [32m+++[m[31m---------------------[m
+ backend/app/integrations/domain_intelligence.py | 272 [32m+++++++++++++++[m
+ backend/app/services/orchestrator.py            |   2 [32m+[m
+ backend/app/utils/validators.py                 |   4 [32m+[m[31m-[m
+ backend/requirements.txt                        |   1 [32m+[m
+ backend/tests/unit/test_domain_intelligence.py  |  99 [32m++++++[m
+ backend/tests/unit/test_normalizer.py           |  10 [32m+[m
+ backend/tests/unit/test_validators.py           |   6 [32m+[m
+ docs/README.md                                  |   4 [31m-[m
+ docs/operations.md                              |  17 [31m-[m
+ docs/providers.md                               |  22 [31m--[m
+ docs/scoring.md                                 |  27 [31m--[m
+ docs/security.md                                |  28 [31m--[m
+ frontend/index.html                             |   2 [32m+[m[31m-[m
+ frontend/src/App.tsx                            | 163 [32m++++++++[m[31m-[m
+ frontend/src/api.ts                             |   4 [32m+[m[31m-[m
+ frontend/src/styles.css                         | 546 [32m+++++++++++++[m[31m------------------[m
+ setup.md                                        | 460 [31m--------------------------[m
+ 19 files changed, 826 insertions(+), 1347 deletions(-)
